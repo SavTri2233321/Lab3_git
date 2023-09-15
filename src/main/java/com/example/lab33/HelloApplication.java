@@ -22,6 +22,8 @@ public class HelloApplication extends Application {
     int valeurAjoute = 1;
     double durer = 5;
     int valeurAjouteTimeLine=1;
+
+    int coupCritique = 0;
     @Override
     public void start(Stage stage) throws IOException {
 
@@ -30,7 +32,7 @@ public class HelloApplication extends Application {
         Button bouttonAmelioration1 = new Button("      Augmenter le nombre de biscuit de +1       ");
         Button bouttonAmelioration2 = new Button("Augmenter le nombre de biscuit du clic auto de +1");
         Button bouttonAmelioration3 = new Button("           Ajouter un clic auto 1/60sec          ");
-        Button bouttonAmelioration4 = new Button("                 Coup  Critique                  ");
+        Button bouttonAmelioration4 = new Button("               Coup Critique +15%                ");
         Button bouttonAmelioration5 = new Button("                  Amelioration                   ");
 
         //Creation essentiel
@@ -61,6 +63,9 @@ public class HelloApplication extends Application {
         bouttonBiscuit.setTranslateX(300);
         bouttonBiscuit.setTranslateY(300);
         bouttonBiscuit.setOnAction(actionEvent -> {
+            if ((int) (Math.random() * 100) <= coupCritique) {
+                        NbDeBiscuit += valeurAjoute;
+                }
             NbDeBiscuit += valeurAjoute;
             nbDeBiscuitPossedePrincipale.setText("Nombre de bicuits : " + NbDeBiscuit);
             stage.setScene(scenePrincipale);
@@ -172,6 +177,16 @@ public class HelloApplication extends Application {
         prixAmelioration4.setScaleY(2);
         prixAmelioration4.setTranslateX(35);
         prixAmelioration4.setTranslateY(415);
+        bouttonAmelioration4.setOnAction(actionEvent -> {
+            if (valeurAmelioration[3] <= NbDeBiscuit) {
+                NbDeBiscuit -= valeurAmelioration[3];
+                coupCritique += 5;
+                prixAmelioration3.setText("Prix : " + valeurAmelioration[3]);
+                nbDeBiscuitPossedeAmelioration.setText("Nombre de bicuits : " + NbDeBiscuit);
+                stage.setScene(sceneAmelioration);
+            }
+
+        });
 
         //Bouton pour amelioration 5
         bouttonAmelioration5.setScaleX(2);
